@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "nalvera": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "nalvera.mcp"],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}

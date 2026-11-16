@@ -1,0 +1,8 @@
+# Codex: the Nalvera.AI MCP server on this computer (add to ~/.codex/config.toml).
+# Needs: pip install "nalvera[mcp]" and, once, nalvera.login(remember=True).
+[mcp_servers.nalvera]
+command = "python"
+args = ["-m", "nalvera.mcp"]
+# NALVERA_MCP_ALLOWED_DIRS  default: unset (the folder Codex starts the server in).
+#    Options: folders separated by : (; on Windows)
+env = { NALVERA_MCP_ALLOWED_DIRS = "/path/to/scans" }

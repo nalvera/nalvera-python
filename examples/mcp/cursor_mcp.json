@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "nalvera": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["-m", "nalvera.mcp"],
+      "env": {
+        "NALVERA_MCP_ALLOWED_DIRS": "${workspaceFolder}"
+      }
+    }
+  }
+}

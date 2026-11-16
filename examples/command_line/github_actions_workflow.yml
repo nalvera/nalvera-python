@@ -1,0 +1,22 @@
+# Run TotalSegmentator from GitHub Actions on a runner inside your network, where the scans
+# are. The key is a repository secret (Settings → Secrets and variables → Actions); this file
+# holds none. Queues no task that would pass 25 credits (budget personal). Copy to .github/workflows/.
+name: nalvera
+on:
+  workflow_dispatch:
+jobs:
+  segment:
+    runs-on: self-hosted
+    steps:
+      - name: Install a pinned version of the nalvera package
+        run: python3 -m pip install "nalvera==0.1.0"
+      - name: Run the scans
+        env:
+          NALVERA_EMAIL: ${{ secrets.NALVERA_EMAIL }}
+          NALVERA_API_KEY: ${{ secrets.NALVERA_API_KEY }}
+          # NALVERA_BUDGET  default: unset (free tasks first, then personal, or a question
+          #   with a lab). Options: personal | lab:<id> | free | ask
+          NALVERA_BUDGET: personal
+        # --max-credits  default: none (NALVERA_MAX_CREDITS, else no cap)
+        # --out  default: results
+        run: nalvera run /data/scans --model totalsegmentator_ct --max-credits 25 --out /data/results

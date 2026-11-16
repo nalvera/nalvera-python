@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "nalvera": {
+      "command": "python",
+      "args": ["-m", "nalvera.mcp"],
+      "env": {
+        "NALVERA_MCP_ALLOWED_DIRS": "/path/to/scans"
+      }
+    }
+  }
+}

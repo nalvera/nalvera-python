@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nalvera"
+dynamic = ["version"]
+description = "Run Nalvera.AI tasks on medical scans from Python. Scans are anonymized on your computer before upload."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Nalvera BV" }]
+keywords = ["medical imaging", "segmentation", "nifti", "dicom", "anonymization", "nalvera"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+dependencies = [
+    "requests>=2.33",
+    # TLS and the streamed downloads go through urllib3 directly.
+    "urllib3>=2.8",
+    "numpy>=1.22",
+    "nibabel>=4.0",
+    "cryptography>=50",
+    # DICOM conversion. Installed where the dcm2niix package publishes a
+    # build (64-bit Intel and ARM on Linux and macOS, 64-bit Intel Windows),
+    # so that elsewhere the package still installs and NIfTI files still
+    # work. Windows on ARM has no build: there DICOM needs a dcm2niix named
+    # by NALVERA_DCM2NIIX. 1.0.20261029 is the release whose output names
+    # the tests measured.
+    "dcm2niix>=1.0.20261029; platform_machine == 'x86_64' or platform_machine == 'AMD64' or platform_machine == 'arm64' or platform_machine == 'aarch64'",
+]
+
+[project.optional-dependencies]
+keyring = ["keyring>=23"]
+dicom = ["dcm2niix>=1.0.20261029"]
+# The local MCP server (python -m nalvera.mcp), built against the MCP SDK 2.3.
+mcp = [
+    "mcp>=2.3,<3",
+    "jsonschema>=4.20",
+]
+dev = [
+    "pytest>=7",
+    "ruff>=0.4",
+    "build>=1.0",
+    # The notebooks of examples/notebooks/ run in a real kernel in the tests.
+    "ipykernel>=6.0",
+    "nbclient>=0.7",
+    "pydicom>=2.3",
+]
+
+[project.scripts]
+nalvera = "nalvera.cli:main"
+
+[project.urls]
+Homepage = "https://nalvera.ai/python-api"
+Documentation = "https://nalvera.ai/python-api"
+Repository = "https://github.com/nalvera/nalvera-python"
+Issues = "https://github.com/nalvera/nalvera-python/issues"
+Changelog = "https://github.com/nalvera/nalvera-python/blob/main/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = { attr = "nalvera._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# The MCP tools' manifest (names, descriptions, schemas, texts).
+"nalvera.mcp" = ["mcp_tools.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# typing.Optional/List stay, and zip() is not given strict=: the code is not
+# restyled for newer syntax.
+ignore = ["UP006", "UP007", "UP035", "UP045", "B905"]

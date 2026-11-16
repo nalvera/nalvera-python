@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nalvera": {
+      "command": "python",
+      "args": ["-m", "nalvera.mcp"]
+    }
+  }
+}

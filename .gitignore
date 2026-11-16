@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Files a run creates: the mapping links neutral codes to original scan
+# names and stays on the computer that made it.
+nalvera_scans.csv
+results/
+generated/
+
+# The maintainer's own notes: in no commit and in no archive.
+_info/
+
+# Editors and systems
+.DS_Store
+# Jupyter keeps a copy of each notebook here, outputs and typed keys included.
+.ipynb_checkpoints/
+.idea/
+.vscode/
