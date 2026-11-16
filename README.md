@@ -1,6 +1,6 @@
 # nalvera
 
-Run CT segmentation, MRI segmentation, research reports and synthetic CT or MRI generation on [Nalvera.AI](https://nalvera.ai) from a Jupyter notebook or a script. Every scan is anonymized on your computer before any byte is uploaded. For research use only.
+Run CT segmentation, MRI segmentation, research reports and synthetic CT or MRI generation on [Nalvera.AI](https://nalvera.ai) from a Jupyter notebook or a script. For research use only.
 
 - **Install**: `pip install nalvera`, for Python 3.10 or later
 - **Sign in**: `nalvera.login("you@university.org", "nvk_...")`, with an API key from Settings → API
@@ -8,7 +8,7 @@ Run CT segmentation, MRI segmentation, research reports and synthetic CT or MRI 
 - **Models**: TotalSegmentator, MOOSE, NV-Segment-CT, MRSegmentator, MuscleMap, Merlin, NV-Reason-CT and MAISI-v2
 - **Anonymized on your computer**: file names, header text and header extensions are removed before upload; faces and burned-in text stay
 - **Budgets**: free AI tasks first, then your personal credits or a lab's budget, with an optional spending cap
-- **Access**: any verified account, the free Guest plan included; switch API access on under Settings → API
+- **Access**: any verified Nalvera.AI account, the free Guest plan included; switch API access on under Settings → API
 
 ## How do I install the package?
 
@@ -24,7 +24,7 @@ In a notebook cell, type `%pip install nalvera`. Two extras are optional: `nalve
 
 Create a key on the website under Settings → API of the account that pays for the AI tasks, then give it to `nalvera.login`, which checks it with Nalvera.AI.
 
-1. Sign in at https://nalvera.ai. Create an account there if you have none.
+1. Sign in at https://nalvera.ai. Create and verify your account there if you have none.
 2. Open the menu (⋮) at the bottom left, then Settings → API.
 3. Switch API access on.
 4. Create a key that may run tasks.
@@ -92,24 +92,13 @@ TotalSegmentator, MOOSE, NV-Segment-CT, MRSegmentator and MuscleMap outline orga
 | NV-Reason-CT | `nv_reason_ct` | chest or abdominal CT | a written report |
 | MAISI-v2 | `nv_generate_ctmr` | none | a synthetic CT or brain MRI volume |
 
-[//]: # (quote: examples/list_models_and_tasks.py lines 6-20)
+[//]: # (quote: examples/list_models_and_tasks.py lines 6-9)
 
 ```python
 import nalvera
 
 nalvera.login()                     # asks, or reads the environment
-for model in nalvera.models():
-    kind = "generation, no scan" if model["generative"] else "/".join(model["modality"])
-    print(f"{model['id']}: {model['name']} {model['version']} ({kind}, {model['type']})")
-    for task in model["tasks"]:
-        mark = " (default)" if task["default"] else ""
-        print(f"    task={task['id']!r}{mark}: {task['name']},",
-              task["price_eur_per_mvoxel"], "EUR per million voxels")
-        if task["needs_text"]:
-            print("        needs a text query: run(..., text=...)")
-        if task["generation"]:                         # the settings nalvera.generate accepts
-            for name, allowed in task["generation"].items():
-                print(f"        {name}: {allowed}")
+print(nalvera.models())             # a table: one row per task, with its price
 ```
 
 ## How do I run TotalSegmentator from Python?
@@ -710,7 +699,7 @@ Every message goes to one reporter: `Client(reporter=nalvera.ListReporter())` ke
 
 - Study Design: grouping scans by patient, measuring them over time and writing reports are on the website.
 - Interactive Studio: click-to-segment is on the website, in a desktop browser.
-- Face removal and burned-in text removal. Nalvera Privacy Vault, a desktop app in development, is planned to offer both.
+- Face removal and burned-in text removal.
 
 Accounts are always created on nalvera.ai. The package gives no waiting-time estimate: it shows the queue position, the time waited and the time running.
 

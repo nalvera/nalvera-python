@@ -127,7 +127,7 @@ The package README section "Connect an assistant that runs on your computer" has
 
 - Study Design: grouping scans by patient, measuring them over time and writing reports are on the website.
 - Interactive Studio: click-to-segment is on the website, in a desktop browser.
-- Face removal and burned-in text removal. Nalvera Privacy Vault, a desktop app in development, is planned to offer both.
+- Face removal and burned-in text removal.
 
 ## Read more
 
