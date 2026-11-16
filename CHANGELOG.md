@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+Documentation only. The package's functions are unchanged.
+
+- The README's introduction is shorter, and it says which account may use the API: any verified Nalvera.AI account.
+- `examples/list_models_and_tasks.py` prints the table `nalvera.models()` returns, in two lines.
+
 ## 0.1.0
 
 First release.

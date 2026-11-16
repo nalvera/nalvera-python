@@ -9,7 +9,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Install a pinned version of the nalvera package
-        run: python3 -m pip install "nalvera==0.1.0"
+        run: python3 -m pip install "nalvera==0.1.1"
       - name: Run the scans
         env:
           NALVERA_EMAIL: ${{ secrets.NALVERA_EMAIL }}
